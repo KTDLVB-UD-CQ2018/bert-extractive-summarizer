@@ -4,7 +4,6 @@ import torch
 import numpy as np
 from numpy import ndarray
 from typing import List
-from vncorenlp import VnCoreNLP
 
 logging.basicConfig(level=logging.WARNING)
 
@@ -30,7 +29,6 @@ class BertParent(object):
         self.model = AutoModel.from_pretrained("vinai/phobert-base", output_hidden_states=True)
         self.tokenizer = AutoTokenizer.from_pretrained("vinai/phobert-base", use_fast=False)
         self.model.eval()
-        self.rdrsegmenter = VnCoreNLP("VnCoreNLP-1.1.1.jar", annotators="wseg", max_heap_size='-Xmx500m') 
 
     def tokenize_input(self, text: str) -> torch.tensor:
         """
@@ -38,7 +36,7 @@ class BertParent(object):
         :param text: Text to tokenize
         :return: Returns a torch tensor
         """
-        tokenized_text = self.tokenizer.tokenize(text)#self.rdrsegmenter.tokenize(text)[0]
+        tokenized_text = self.tokenizer.tokenize(text)
         #print(f'tokenized text: {tokenized_text}')
         indexed_tokens = self.tokenizer.convert_tokens_to_ids(tokenized_text)
         return torch.tensor([indexed_tokens])

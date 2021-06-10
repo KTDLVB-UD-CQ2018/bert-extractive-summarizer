@@ -29,7 +29,7 @@ class ModelProcessor(object):
         self.nlp = language()
         self.random_state = random_state
         self.nlp.add_pipe(self.nlp.create_pipe('sentencizer'))
-        self.rdrsegmenter = VnCoreNLP("VnCoreNLP-1.1.1.jar", annotators="wseg", max_heap_size='-Xmx500m') 
+        self.rdrsegmenter = VnCoreNLP("/content/bert-extractive-summarizer/VnCoreNLP-1.1.1.jar", annotators="wseg", max_heap_size='-Xmx500m') 
         neuralcoref.add_to_pipe(self.nlp, greedyness=greedyness)
 
     def process_content_sentences(self, body: str, min_length=40, max_length=600) -> List[str]:
